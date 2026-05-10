@@ -1,0 +1,48 @@
+{
+  "entities": {
+    "Product": {
+      "title": "Product",
+      "description": "A tea or beverage item available for order.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "description": "Display name of the drink." },
+        "description": { "type": "string", "description": "Short description of the drink." },
+        "price": { "type": "number", "description": "Base price of the drink." },
+        "category": { "type": "string", "description": "Category ID or name." },
+        "imageUrl": { "type": "string", "description": "URL to the product image." },
+        "isAvailable": { "type": "boolean", "description": "Whether the product can be ordered." }
+      },
+      "required": ["name", "price", "category", "isAvailable"]
+    },
+    "Category": {
+      "title": "Category",
+      "description": "A grouping for products (e.g., Milk Tea, Fresh Juice).",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "description": "Name of the category." },
+        "order": { "type": "number", "description": "Display order in the menu." }
+      },
+      "required": ["name"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "A customer's order containing multiple items.",
+      "type": "object",
+      "properties": {
+        "items": { "type": "array", "description": "List of ordered items." },
+        "totalAmount": { "type": "number", "description": "Total price of the order." },
+        "status": { "type": "string", "enum": ["pending", "preparing", "completed", "cancelled"], "description": "Current state of the order." },
+        "customerName": { "type": "string", "description": "Name of the customer." },
+        "tableNumber": { "type": "string", "description": "Optional table identifier." },
+        "createdAt": { "type": "string", "format": "date-time", "description": "When the order was placed." },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Last update time." }
+      },
+      "required": ["items", "totalAmount", "status", "createdAt", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "/products/{productId}": { "schema": "Product", "description": "Available products." },
+    "/categories/{categoryId}": { "schema": "Category", "description": "Product categories." },
+    "/orders/{orderId}": { "schema": "Order", "description": "Customer orders." }
+  }
+}
